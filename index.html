@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://github.com/n1k41s/gopnik-game.git">
+</head>
+<body style="background-image: url(меню.bmp);" class="body">
+	<div class="menu">
+		<button class="menybtn" style="width: 500px;height: 300px;margin-left: 400px;margin-top: 250px;background-color: rgba(0,0,255,0);border: 0px"></button>
+	</div>
+	<div style="display: none;" class="stats">
+		<h1 class="strength"></h1>
+		<h1 class="energy"></h1>
+		<h1 class="money"></h1>
+	</div>
+	<div class="location1" style="display: flex;display: none">
+		<button class="exit" style="height: 25px">ВЫЙТИ</button>
+		<div class="hero">
+			<h1 style="background-color: green;position: absolute;margin-left: 250px;margin-top: 100px" class="hero_hp"></h1>
+			<img src="hero.png" style="width: 200px;height: 300px;margin-left: 200px;margin-top: 150px">
+			<img src="kulak.png" style="width: 150px;height: 150px;margin-bottom: 100px" class="kulak">
+		</div>
+		<div>
+			<h1 style="background-color: green;position: absolute;margin-left: 100px;margin-top: 50px" class="enemy_hp"></h1>
+			<img src="1.png" style="width: 300px;height: 300px;margin-top: 100px">
+		</div>
+
+	</div>
+	<div class="location0" style="display: none;">
+		<div style="width: 100px;height: 50px;position: absolute;margin-left: 200px;margin-bottom: 300px;">
+			<button class="btn">войти</button>
+		</div>
+		<div style="width: 100px;height: 50px;position: absolute;margin-left: 450px;margin-bottom: 300px;">
+			<button class="btn">войти</button>
+		</div>
+		<div style="width: 100px;height: 50px;position: absolute;margin-left: 950px;margin-bottom: 300px;">
+			<button class="btn">войти</button>
+		</div>
+		<div>
+			<img src="hero.png" style="width: 200px;height: 300px;margin-left: 200px;margin-top: 150px">
+		</div>
+	</div>
+	<div class="location2 " style="display: none;">
+		<button class="exit" style="height: 25px">ВЫЙТИ</button>
+		<button class="trn" style="position: absolute;margin-left: 200px;margin-top: 30px"><p>Потренироваться,-5 энергии,+1 к силе</p></button>
+	<div>
+			<img src="hero.png" style="width: 200px;height: 300px;margin-left: 200px;margin-top: 150px">
+		</div>
+	</div>
+	<div class="location4" style="display: none;">
+		<button class="exit" style="height: 25px">ВЫЙТИ</button>
+		<div>
+			<img src="hero.png" style="width: 200px;height: 300px;margin-left: 200px;margin-top: 150px">
+		</div>
+		<div style="" class="polka"></div>
+		<div class="food">
+			<button class="eat">+20 эергии;-5 денег</button>
+			<img src="печенье.png" style="width:150px;height: 150px">
+		</div>
+		<div class="food">
+			<button class="eat">+40 эергии;-10 денег</button>
+			<img src="печенье.png" style="width:150px;height: 150px">
+		</div>
+		<div class="food">
+			<button class="eat">+60 эергии;-15 денег</button>
+			<img src="печенье.png" style="width:150px;height: 150px">
+		</div>
+		<div class="food">
+			<button class="eat">+80 эергии;-20 денег</button>
+			<img src="печенье.png" style="width:150px;height: 150px">
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		let kupitkislotu = document.querySelector(".colino")
+		let colkisloty = 0
+		let volny = 0
+		let eat = document.querySelectorAll(".eat")
+		let damage = 0;
+		let default_hp = 100;
+		let default_ehp = 100;
+		let strength = 5;
+		let energy = 20;
+		let money = 50;
+		let hero_hp = 100 + strength
+		let enemy_hp = 100; 
+		let stats_energy = document.querySelector(".energy")
+		let stats_strength = document.querySelector(".strength")
+		let stats_money = document.querySelector(".money")
+		let stats_hp = document.querySelector(".hero_hp")
+		let stats_ehp = document.querySelector(".enemy_hp")
+		let kulak = document.querySelector(".kulak")
+		let enemy_damage = 1
+		let body = document.querySelector(".body")
+		let loc0 = document.querySelector(".location0")
+		let loc1 = document.querySelector(".location1")
+		let loc2 = document.querySelector(".location2")
+		let loc3 = document.querySelector(".location3")
+		let loc4 = document.querySelector(".location4")
+		let loc5 = document.querySelector(".location5")
+		let exit = document.querySelectorAll(".exit")
+		let btn = document.querySelectorAll(".btn")
+		stats_energy.innerHTML = "энергия: " + energy
+		stats_strength.innerHTML = "сила: " + strength
+		stats_money.innerHTML = "деньги: " + money
+		stats_hp.innerHTML = "hp: " + hero_hp
+		stats_ehp.innerHTML = "hp: " + enemy_hp
+		let trnbtn = document.querySelectorAll(".trn")
+		
+
+
+			loc0.style.display = "block"
+			loc1.style.display = "none"
+			loc2.style.display = "none"
+			loc4.style.display = "none"
+
+			loc0.style.display = "flex"
+			loc0.style.display = "none"
+		kulak.onclick = function(){
+			enemy_hp = enemy_hp - strength
+			hero_hp = hero_hp - enemy_damage
+			stats_hp.innerHTML = "hp: " + hero_hp
+			stats_ehp.innerHTML = "hp: " + enemy_hp
+
+			if(hero_hp < 1 && enemy_hp < 1){
+				alert("ты продержался " + volny + " волн")
+				location.reload()
+			}  
+			if(energy < 1){
+				alert("ты продержался " + volny + " волн")
+				location.reload()
+			}  
+			if(enemy_hp < 1){
+				alert("Ты победил драку! у тебя энегргия снизилась на 5, и ты получил 10 рублей")
+				energy = energy - 5
+				money = money + 10
+				stats_energy.innerHTML = "энергия: " + energy
+				stats_money.innerHTML = "деньги: " + money
+				default_ehp = default_ehp + 10
+				enemy_damage = enemy_damage + 1
+				volny = volny + 1
+				if(energy < 1){
+				alert("ты продержался " + volny + " волн")
+				location.reload()
+			}  
+				body.style.backgroundImage = "url(коридор.bmp)"
+				loc1.style.display = "none"
+				loc0.style.display = "block"
+			}
+			if(hero_hp < 1){
+				alert("ты продержался " + volny + " волн")
+			}
+			
+			if(enemy_hp < 60){
+				stats_ehp.style.backgroundColor = "orange"
+			}
+			if(enemy_hp < 30){
+				stats_ehp.style.backgroundColor = "red"
+			}
+			
+			if(hero_hp < 60){
+				stats_hp.style.backgroundColor = "orange"
+			}
+			if(hero_hp < 30){
+				stats_hp.style.backgroundColor = "red"
+			}
+
+
+
+			}  
+			
+		document.querySelector(".menybtn").onclick = function(){
+
+
+			loc0.style.display = "block"
+			document.querySelector(".menu").style.display = "none"
+			document.querySelector(".stats").style.display = "block"
+			body.style.backgroundImage = "url(коридор.bmp)"
+			alert("Привет ты в этой играешь за школьника-гопника.Тебе нужно избить как больше школьников в раздевалке (с каждой победой школьники становтся сильнее,а что бы ты стал сильнее тебе надо тренироваться на спортивном зале (тоесть на уроке физры).Пополнять выносливость ты можешь купив печеньки в столовой деньги получаешь победив школьников. Сила увеличивает урон героя и здоровье")
+			
+
+			loc0.style.display = "flex"
+		btn[0].onclick = function(){
+
+
+			hero_hp = default_hp + strength
+			enemy_hp = default_ehp
+			stats_ehp.innerHTML = "hp: " + enemy_hp
+			stats_hp.innerHTML = "hp: " + hero_hp
+
+
+
+			loc0.style.display = "none"
+			loc1.style.display = "block"
+			loc1.style.display = "flex"
+			loc2.style.display = "none"
+			loc4.style.display = "none"
+			body.style.backgroundImage = "url(раздевалка.bmp)"
+			stats_ehp.style.backgroundColor = "green"
+			stats_hp.style.backgroundColor = "green"
+			exit[0].onclick = function(){
+				loc0.style.display = "block"
+				loc1.style.display = "none"
+				loc2.style.display = "none"
+				loc4.style.display = "none"
+				body.style.backgroundImage = "url(коридор.bmp)"
+		}
+			
+			}
+		}
+		btn[1].onclick = function(){
+			
+			body.style.backgroundImage = "url(физра.bmp)"
+			
+			loc0.style.display = "none"
+			loc1.style.display = "none"
+			loc4.style.display = "none"
+
+			loc2.style.display = "block"
+
+			trnbtn[0].onclick = function(){
+				energy = energy - 5
+				strength = strength + 1
+				stats_strength.innerHTML = "сила: " + strength
+				stats_energy.innerHTML = "энергия: " + energy
+					if(energy < 1){
+					alert("ты продержался " + volny + " волн")
+					location.reload()
+				}
+			}
+			exit[1].onclick = function(){
+				loc0.style.display = "block"
+				loc1.style.display = "none"
+				loc2.style.display = "none"
+				loc4.style.display = "none"
+
+	
+				body.style.backgroundImage = "url(коридор.bmp)"
+			}
+		}
+		btn[2].onclick = function(){
+			body.style.backgroundImage = "url(столовка.bmp)"
+			
+			loc0.style.display = "none"
+			loc1.style.display = "none"
+			loc4.style.display = "block"
+			loc4.style.display = "flex"
+			eat[0].onclick = function(){
+				energy = energy + 20
+				money = money - 5
+				stats_energy.innerHTML = "энергия: " + energy
+				stats_money.innerHTML = "деньги: " + money
+				if(money < 0){
+					alert("ты продержался " + volny + " волн")
+					location.reload()
+				}
+			}
+			eat[1].onclick = function(){
+				energy = energy + 40
+				money = money - 10
+				stats_energy.innerHTML = "энергия: " + energy
+				stats_money.innerHTML = "деньги: " + money
+				if(money < 0){
+					alert("ты продержался " + volny + " волн")
+					location.reload()
+				}
+			}
+			eat[2].onclick = function(){
+				energy = energy + 60
+				money = money - 15
+				stats_energy.innerHTML = "энергия: " + energy
+				stats_money.innerHTML = "деньги: " + money
+				if(money < 0){
+					alert("ты продержался " + volny + " волн")
+					location.reload()
+				}
+			}
+			eat[3].onclick = function(){
+				energy = energy + 80
+				money = money - 20
+				stats_energy.innerHTML = "энергия: " + energy
+				stats_money.innerHTML = "деньги: " + money
+				if(money < 0){
+					alert("ты продержался " + volny + " волн")
+					location.reload()
+				}
+			}
+			exit[2].onclick = function(){
+				loc0.style.display = "block"
+				loc1.style.display = "none"
+				loc2.style.display = "none"
+				loc4.style.display = "none"	
+				body.style.backgroundImage = "url(коридор.bmp)"
+			}
+		}
+			
+	</script>
+</body>
+</html>
